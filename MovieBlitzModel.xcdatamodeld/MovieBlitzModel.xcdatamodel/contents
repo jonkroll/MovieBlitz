@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="872" systemVersion="11D50" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Actor" representedClassName="Actor" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" attributeType="String" indexed="YES" syncable="YES"/>
+        <relationship name="roles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Role" inverseName="actor" inverseEntity="Role" syncable="YES"/>
+    </entity>
+    <entity name="Movie" representedClassName="Movie" syncable="YES">
+        <attribute name="image" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" attributeType="String" syncable="YES"/>
+        <attribute name="year" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="roles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Role" inverseName="movie" inverseEntity="Role" syncable="YES"/>
+    </entity>
+    <entity name="Role" representedClassName="Role" syncable="YES">
+        <attribute name="billing" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="characterName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="actor" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Actor" inverseName="roles" inverseEntity="Actor" syncable="YES"/>
+        <relationship name="movie" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Movie" inverseName="roles" inverseEntity="Movie" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Actor" positionX="79" positionY="-99" width="128" height="90"/>
+        <element name="Movie" positionX="-270" positionY="-81" width="128" height="105"/>
+        <element name="Role" positionX="-99" positionY="-99" width="128" height="105"/>
+    </elements>
+</model>
