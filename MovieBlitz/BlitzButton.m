@@ -16,18 +16,8 @@
 
 @implementation BlitzButton
 
-// forward declare
-//void SystemSoundsDemoCompletionProc (SystemSoundID soundID, void *clientData);
-
 @synthesize item = _item;
 @synthesize position = _position;
-
-
-//void SystemSoundsDemoCompletionProc (SystemSoundID soundID, void *clientData)
-//{
-//	AudioServicesDisposeSystemSoundID (soundID);
-//};
-
 
 - (id)initWithItem:(NSManagedObject*)obj forPositionNumber:(NSInteger)num
 {
@@ -55,18 +45,22 @@
         [self addSubview:buttonText];
         
         NSURL *imgUrl;
+        NSString *placeholderImageName;
+        
         if ([obj isKindOfClass:[Actor class]]) {
             buttonText.text = [(Actor*)obj name];
             imgUrl = [NSURL URLWithString:[(Actor*)obj image]];
+            placeholderImageName = @"no-profile-w92.jpg";
         } else {
             Movie *movie = (Movie*)obj;
             buttonText.text = [NSString stringWithFormat:@"%@ (%@)", movie.title, movie.year];            
             imgUrl = [NSURL URLWithString:[(Movie*)obj image]];
+            placeholderImageName = @"no-poster-w92.jpg";
         }
                 
         UIImageView *photo = [[UIImageView alloc] init];
-        [photo setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"placeholder.png"]];        
-        photo.frame = CGRectMake(0,0, 38,54);
+        [photo setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:placeholderImageName]];        
+        photo.frame = CGRectMake(0, 0, 38, 54);
         photo.userInteractionEnabled = NO;
         [self addSubview:photo];
         
@@ -99,7 +93,7 @@
                                           completion:^(BOOL finished){
                                               //done
 
-                                              
+/*                                              
                                               NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
                                               if ([[defaults objectForKey:@"sounds"] isEqualToString:@"on"]) {
                                                   
@@ -117,7 +111,7 @@
                                                   }
                                                   
                                               }
-                                              
+*/                                              
                                           }
                         ];
                    }];    

@@ -23,8 +23,6 @@ void uncaughtExceptionHandler(NSException *exception);
 
 @implementation AppDelegate
 
-
-@synthesize appSoundPlayer = _appSoundPlayer;
 @synthesize window = _window;
 @synthesize context = _context;
 
@@ -36,15 +34,6 @@ void uncaughtExceptionHandler(NSException *exception);
     // initialize data analytics collection
     NSSetUncaughtExceptionHandler(&uncaughtExceptionHandler);
     [FlurryAnalytics startSession:kFlurryAnalyticsApplicationKey];
-    
-    
-    // preload sounds
-    VKRSAppSoundPlayer *aPlayer = [[VKRSAppSoundPlayer alloc] init];
-    [aPlayer addSoundWithFilename:@"click" andExtension:@"wav"];
-    [aPlayer addSoundWithFilename:@"pop2" andExtension:@"wav"];
-    [aPlayer addSoundWithFilename:@"ding" andExtension:@"wav"];
-    [aPlayer addSoundWithFilename:@"bummer" andExtension:@"wav"];
-    self.appSoundPlayer = aPlayer;
     
     
     // install default db if it doesn't already exist
@@ -140,14 +129,6 @@ void uncaughtExceptionHandler(NSException *exception);
     return objContext;    
 }
 
-#pragma mark -
-
-- (void)playSound:(NSString *)sound
-{    
-    NSLog(@"playing sound: %@",sound);
-    
-    [self.appSoundPlayer playSound:sound];
-}
 
 #pragma mark -
 

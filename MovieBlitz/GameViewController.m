@@ -147,7 +147,7 @@ static void dingSoundFinished(SystemSoundID soundID, void *data);
         buttonText.text = [NSString stringWithFormat:@"%@ (%@)", question.movie.title, question.movie.year];            
         NSURL *imgUrl = [NSURL URLWithString:question.movie.image];
         UIImageView *photo = [[UIImageView alloc] init];
-        [photo setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+        [photo setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"no-poster-w92.jpg"]];
         photo.frame = CGRectMake(0,0, 38,54);
         photo.userInteractionEnabled = NO;
         [bg addSubview:photo];
@@ -386,6 +386,22 @@ static void dingSoundFinished(SystemSoundID soundID, void *data) {
                          
                          NSManagedObject* item = [correctAnswer item];
                          
+                         // remove top button for just-answered question
+                         UIView *view;
+                         for (view in [self.view subviews]) {
+                             if ([view isKindOfClass:[BlitzButton class]]) {
+                                 NSManagedObject *item = [(BlitzButton*)view item];
+                                 if (([self.game.currentQuestion isKindOfClass:[MBMovieQuestion class]] && 
+                                       [item isEqual:[(MBMovieQuestion*)self.game.currentQuestion movie]])
+                                     ||
+                                     ([self.game.currentQuestion isKindOfClass:[MBActorQuestion class]] && 
+                                      [item isEqual:[(MBActorQuestion*)self.game.currentQuestion actor]])) {
+                                         [view removeFromSuperview];
+                                     }
+                             }
+                         }
+                         
+                         
                          if ([item isKindOfClass:[Actor class]]) {
                              [self showQuestion:[MBActorQuestion actorQuestionFromContext:context 
                                                                                  forActor:(Actor*)item
@@ -423,7 +439,7 @@ static void dingSoundFinished(SystemSoundID soundID, void *data) {
     if ([[segue identifier] isEqualToString:@"GameOver"])
     {
         GameOverViewController *vc = [segue destinationViewController];        
-        [vc setFinalQuestion:self.game.currentQuestion];
+        [vc setFinishedGame:self.game];
 
         // save miniimage from the button so we know the correct dimensions for the larger version
         // we'll show on the next view

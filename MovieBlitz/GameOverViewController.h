@@ -7,15 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MBGame.h"
 #import "MBQuestion.h"
 
 @interface GameOverViewController : UIViewController
 
-@property (nonatomic, strong) MBQuestion *finalQuestion;
+@property (nonatomic, strong) MBGame *finishedGame;
 @property (nonatomic, strong) UIImage *miniImage;
 
 @property (nonatomic, strong) IBOutlet UILabel *gameOverText;
-@property (nonatomic, strong) IBOutlet UIImageView *imgView;
+@property (nonatomic, strong) IBOutlet UILabel *yourScoreText;
 
 - (IBAction)clickContinueButton:(UIButton*)sender;
 

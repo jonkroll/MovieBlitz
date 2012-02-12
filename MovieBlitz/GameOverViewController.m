@@ -11,14 +11,14 @@
 #import "UIImageView+WebCache.h"
 #import "MBMovieQuestion.h"
 #import "MBActorQuestion.h"
-
+#import "MBGame.h"
 
 @implementation GameOverViewController
 
-@synthesize finalQuestion = _finalQuestion;
+@synthesize finishedGame = _finishedGame;
 @synthesize miniImage = _miniImage;
 @synthesize gameOverText = _gameOverText;
-@synthesize imgView = _imgView;
+@synthesize yourScoreText = _yourScoreText;
 
 - (void)didReceiveMemoryWarning
 {
@@ -37,50 +37,46 @@
     NSURL *imgUrl;
     NSString *gameOverText;
     NSString *imgString;
+    NSString *placeholderImageName;
     
-    if ([self.finalQuestion isKindOfClass:[MBMovieQuestion class]]) {
+    if ([self.finishedGame.currentQuestion isKindOfClass:[MBMovieQuestion class]]) {
         
-        Actor* actor = [(MBMovieQuestion*)self.finalQuestion correctAnswer];
-        gameOverText = [NSString stringWithFormat:@"Sorry.\nThe correct answer was\n%@", actor.name];
-        
-         imgString = [actor.image stringByReplacingOccurrencesOfString:@"/w45/" withString:@"/w185/"];
-
+        Actor* actor = [(MBMovieQuestion*)self.finishedGame.currentQuestion correctAnswer];
+        gameOverText = [NSString stringWithFormat:@"The correct answer was\n%@", actor.name];
+        imgString = [actor.image stringByReplacingOccurrencesOfString:@"/w45/" withString:@"/w185/"];
+        placeholderImageName = @"no-profile-w185.jpg";
         NSLog(@"%@", actor.image);
     } else {
 
-        Movie* movie = [(MBActorQuestion*)self.finalQuestion correctAnswer];
-        gameOverText = [NSString stringWithFormat:@"Sorry. The correct answer was\n%@", movie.title];
-        imgUrl = [NSURL URLWithString:movie.image];
-
+        Movie* movie = [(MBActorQuestion*)self.finishedGame.currentQuestion correctAnswer];
+        gameOverText = [NSString stringWithFormat:@"The correct answer was\n%@", movie.title];
         imgString = [movie.image stringByReplacingOccurrencesOfString:@"/w92/" withString:@"/w185/"];
-
+        placeholderImageName = @"no-poster-w185.jpg";
         NSLog(@"%@", movie.image);
     }
     
+    self.yourScoreText.text = [NSString stringWithFormat:@"Your score was %d", self.finishedGame.score];
+
+    
     imgUrl = [NSURL URLWithString:imgString];
-    
-    
-    
-    
    
     if (self.miniImage) {
-        int imgHeight = 200;
+        int imgHeight = 180;
         
         int imgWidth = self.miniImage.size.width * imgHeight / self.miniImage.size.width;
 
         int imgFrameOriginX = ((320 - imgWidth) /2) - 10;
-        int imgFrameOriginY = ((480 - imgHeight) /2) - 10; 
+        int imgFrameOriginY = ((480 - imgHeight) /2) - 10 - 20; 
         
          UIImageView *fullImgView = [[UIImageView alloc] initWithFrame:CGRectMake(imgFrameOriginX, imgFrameOriginY, 
                                                                                imgWidth + 20, imgHeight + 20)];
         
+        [fullImgView setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:placeholderImageName]]; 
 
-        
-        [fullImgView setImageWithURL:imgUrl placeholderImage:[UIImage imageNamed:@"placeholder.png"]]; 
-        
-        fullImgView.backgroundColor = [UIColor whiteColor];
+        fullImgView.backgroundColor = [UIColor clearColor];
         fullImgView.contentMode = UIViewContentModeCenter;
         
+/*        
         fullImgView.layer.borderColor = [[UIColor lightGrayColor] CGColor];
         fullImgView.layer.borderWidth = 1.0;
         fullImgView.layer.cornerRadius = 5.0;
@@ -89,6 +85,7 @@
         fullImgView.layer.shadowColor = [UIColor grayColor].CGColor;
         fullImgView.layer.shadowOpacity = 0.8;
         fullImgView.layer.shadowRadius = 1.0;
+*/
         
         fullImgView.clipsToBounds = YES;
         
