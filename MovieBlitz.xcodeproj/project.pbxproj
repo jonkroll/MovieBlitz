@@ -41,9 +41,11 @@
 		6EAD61E714DD2225004C835A /* MBMovieQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EAD61E614DD2225004C835A /* MBMovieQuestion.m */; };
 		6EAD61EA14DD223A004C835A /* MBActorQuestion.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EAD61E914DD223A004C835A /* MBActorQuestion.m */; };
 		6EAD61F114DDC1A1004C835A /* NSMutableArray+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EAD61F014DDC1A1004C835A /* NSMutableArray+Utils.m */; };
+		6EB50F1D14E8E831003908E9 /* tick.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB50F1B14E8E831003908E9 /* tick.png */; };
+		6EB50F1E14E8E831003908E9 /* tick@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB50F1C14E8E831003908E9 /* tick@2x.png */; };
+		6EB50F2214E8EC6A003908E9 /* wrong.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB50F2014E8EC6A003908E9 /* wrong.png */; };
+		6EB50F2314E8EC6A003908E9 /* wrong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB50F2114E8EC6A003908E9 /* wrong@2x.png */; };
 		6EB9076014E60FB90028E123 /* NonAnimatedSegue.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB9075F14E60FB90028E123 /* NonAnimatedSegue.m */; };
-		6EB9076814E627AE0028E123 /* Pattern.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB9076614E627AE0028E123 /* Pattern.png */; };
-		6EB9076914E627AE0028E123 /* Pattern@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EB9076714E627AE0028E123 /* Pattern@2x.png */; };
 		6EBF091F14E4E235004DD4EC /* Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EBF091D14E4E235004DD4EC /* Logo.png */; };
 		6EBF092014E4E235004DD4EC /* Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6EBF091E14E4E235004DD4EC /* Logo@2x.png */; };
 		6EBF092414E4E55A004DD4EC /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EBF092314E4E55A004DD4EC /* SettingsViewController.m */; };
@@ -103,7 +105,6 @@
 		6EAD61D814DD1240004C835A /* Role.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Role.m; sourceTree = "<group>"; };
 		6EAD61DC14DD19E8004C835A /* Movie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Movie.h; sourceTree = "<group>"; };
 		6EAD61DD14DD19E8004C835A /* Movie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Movie.m; sourceTree = "<group>"; };
-		6EAD61DF14DD2060004C835A /* temp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = temp.h; path = ../../TestAnimation/temp.h; sourceTree = "<group>"; };
 		6EAD61E214DD214D004C835A /* MBQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBQuestion.h; sourceTree = "<group>"; };
 		6EAD61E314DD214D004C835A /* MBQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBQuestion.m; sourceTree = "<group>"; };
 		6EAD61E514DD2225004C835A /* MBMovieQuestion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBMovieQuestion.h; sourceTree = "<group>"; };
@@ -112,10 +113,12 @@
 		6EAD61E914DD223A004C835A /* MBActorQuestion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBActorQuestion.m; sourceTree = "<group>"; };
 		6EAD61EF14DDC1A0004C835A /* NSMutableArray+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+Utils.h"; sourceTree = "<group>"; };
 		6EAD61F014DDC1A1004C835A /* NSMutableArray+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableArray+Utils.m"; sourceTree = "<group>"; };
+		6EB50F1B14E8E831003908E9 /* tick.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tick.png; path = images/tick.png; sourceTree = "<group>"; };
+		6EB50F1C14E8E831003908E9 /* tick@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tick@2x.png"; path = "images/tick@2x.png"; sourceTree = "<group>"; };
+		6EB50F2014E8EC6A003908E9 /* wrong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wrong.png; path = images/wrong.png; sourceTree = "<group>"; };
+		6EB50F2114E8EC6A003908E9 /* wrong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wrong@2x.png"; path = "images/wrong@2x.png"; sourceTree = "<group>"; };
 		6EB9075E14E60FB90028E123 /* NonAnimatedSegue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NonAnimatedSegue.h; sourceTree = "<group>"; };
 		6EB9075F14E60FB90028E123 /* NonAnimatedSegue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NonAnimatedSegue.m; sourceTree = "<group>"; };
-		6EB9076614E627AE0028E123 /* Pattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Pattern.png; path = images/Pattern.png; sourceTree = "<group>"; };
-		6EB9076714E627AE0028E123 /* Pattern@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Pattern@2x.png"; path = "images/Pattern@2x.png"; sourceTree = "<group>"; };
 		6EBF091D14E4E235004DD4EC /* Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Logo.png; path = images/Logo.png; sourceTree = "<group>"; };
 		6EBF091E14E4E235004DD4EC /* Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Logo@2x.png"; path = "images/Logo@2x.png"; sourceTree = "<group>"; };
 		6EBF092214E4E55A004DD4EC /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
@@ -187,12 +190,14 @@
 		6E79840014E3333F006E4B4A /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				6EB50F2014E8EC6A003908E9 /* wrong.png */,
+				6EB50F2114E8EC6A003908E9 /* wrong@2x.png */,
+				6EB50F1B14E8E831003908E9 /* tick.png */,
+				6EB50F1C14E8E831003908E9 /* tick@2x.png */,
 				6E67EB6814E8663300F86A39 /* no-poster-w185.jpg */,
 				6E67EB6914E8663300F86A39 /* no-profile-w185.jpg */,
 				6E67EB6314E85EFB00F86A39 /* no-poster-w92.jpg */,
 				6E67EB6414E85EFB00F86A39 /* no-profile-w92.jpg */,
-				6EB9076614E627AE0028E123 /* Pattern.png */,
-				6EB9076714E627AE0028E123 /* Pattern@2x.png */,
 				6E6C1C5314E52CFA005A9412 /* Default.png */,
 				6E6C1C5414E52CFA005A9412 /* Default@2x.png */,
 				6EBF091D14E4E235004DD4EC /* Logo.png */,
@@ -238,7 +243,6 @@
 			isa = PBXGroup;
 			children = (
 				6E6D1FD614E0E597006CC0E1 /* MovieBlitz.sqlite */,
-				6EAD61DF14DD2060004C835A /* temp.h */,
 				6E9D7A5614DA441800637247 /* Models */,
 				6E9D7A5714DA442C00637247 /* Controllers */,
 				6EAD61E014DD20A0004C835A /* Views */,
@@ -416,12 +420,14 @@
 				6EC809C714E5DD3F00B34991 /* .gitignore in Resources */,
 				6EC809C814E5DD3F00B34991 /* LICENSE in Resources */,
 				6EC809C914E5DD3F00B34991 /* README.md in Resources */,
-				6EB9076814E627AE0028E123 /* Pattern.png in Resources */,
-				6EB9076914E627AE0028E123 /* Pattern@2x.png in Resources */,
 				6E67EB6514E85EFB00F86A39 /* no-poster-w92.jpg in Resources */,
 				6E67EB6614E85EFB00F86A39 /* no-profile-w92.jpg in Resources */,
 				6E67EB6A14E8663300F86A39 /* no-poster-w185.jpg in Resources */,
 				6E67EB6B14E8663300F86A39 /* no-profile-w185.jpg in Resources */,
+				6EB50F1D14E8E831003908E9 /* tick.png in Resources */,
+				6EB50F1E14E8E831003908E9 /* tick@2x.png in Resources */,
+				6EB50F2214E8EC6A003908E9 /* wrong.png in Resources */,
+				6EB50F2314E8EC6A003908E9 /* wrong@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -487,7 +493,7 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
 				CLANG_ENABLE_OBJC_ARC = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Jon Kroll (LKP7P332C8)";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -502,6 +508,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "044C4CC0-96E8-4D1C-9DC2-C4262B77E86B";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -529,7 +536,7 @@
 		6E9D7A4814DA3F4400637247 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jon Kroll (8FCTG4Y642)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jon Kroll (LKP7P332C8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MovieBlitz/MovieBlitz-Prefix.pch";
 				INFOPLIST_FILE = "MovieBlitz/MovieBlitz-Info.plist";
@@ -538,7 +545,7 @@
 					"\"$(SRCROOT)/FlurryAnalytics\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "CC51CCD1-E48D-4AA3-A683-B8597DF7B5FF";
+				PROVISIONING_PROFILE = "235CBC0B-A77F-49F1-894A-F64F5D599607";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -546,7 +553,7 @@
 		6E9D7A4914DA3F4400637247 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Jon Kroll (8FCTG4Y642)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Jon Kroll (LKP7P332C8)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MovieBlitz/MovieBlitz-Prefix.pch";
 				INFOPLIST_FILE = "MovieBlitz/MovieBlitz-Info.plist";
@@ -555,7 +562,7 @@
 					"\"$(SRCROOT)/FlurryAnalytics\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "CC51CCD1-E48D-4AA3-A683-B8597DF7B5FF";
+				PROVISIONING_PROFILE = "235CBC0B-A77F-49F1-894A-F64F5D599607";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

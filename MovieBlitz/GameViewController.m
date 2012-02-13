@@ -22,6 +22,7 @@
 - (void)updateLifelinesLabel;
 - (void)transitionToNextQuestion;
 - (void)activateButtons;
+- (void)handleWrongAnswer;
 static void dingSoundFinished(SystemSoundID soundID, void *data);
 
 @end
@@ -238,6 +239,7 @@ static void dingSoundFinished(SystemSoundID soundID, void *data);
         }
     }
 
+    
     // remove touchability from all buttons
     BlitzButton *button;
     for (button in self.currentButtons) {
@@ -249,11 +251,34 @@ static void dingSoundFinished(SystemSoundID soundID, void *data);
         
     // check if selected answer was correct
     if ([self.game.currentQuestion isCorrectAnswer:((BlitzButton*)sender).item]) {
+
+        // show checkmark
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"tick" ofType:@"png"];
+        UIImageView *tickImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:path]];
+        tickImageView.frame = CGRectMake(240, 10, 32, 32);
         
+        [sender addSubview:tickImageView];
+        
+        [UIView animateWithDuration:1.0
+                              delay:1.0
+                            options: UIViewAnimationOptionCurveEaseInOut 
+                         animations:^{
+                             
+                             // fade out tick mark
+                             [tickImageView setAlpha:0.0];
+                             
+                         } 
+                         completion:^(BOOL finished){
+                             [tickImageView removeFromSuperview];
+                         }];
+
+        [self transitionToNextQuestion];
+        
+/* 
         
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         if ([[defaults objectForKey:@"sounds"] isEqualToString:@"on"]) {
-
+           
             // play ding sound
 
             SystemSoundID soundID;                       
@@ -274,13 +299,33 @@ static void dingSoundFinished(SystemSoundID soundID, void *data);
         } else {
             [self transitionToNextQuestion];           
         }
+ */
         
     } else {
         
         NSLog(@"Incorrect Answer...");
 
-        [self unhighlightButton:sender];  // ??? doesn't work?
-
+        // show red 'X'
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"wrong" ofType:@"png"];
+        UIImageView *tickImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:path]];
+        tickImageView.frame = CGRectMake(240, 10, 32, 32);
+        
+        [sender addSubview:tickImageView];
+        
+        [UIView animateWithDuration:1.0
+                              delay:1.0
+                            options: UIViewAnimationOptionCurveEaseInOut 
+                         animations:^{
+                             
+                             // fade out x mark
+                             [tickImageView setAlpha:0.0];
+                             
+                         } 
+                         completion:^(BOOL finished){
+                             // do nothing
+                         }];
+        
+        /*
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         if ([[defaults objectForKey:@"sounds"] isEqualToString:@"on"]) {
             
@@ -299,10 +344,9 @@ static void dingSoundFinished(SystemSoundID soundID, void *data);
             
         }
         
-        sleep(1);  // short delay before going t game over view
-        
-        [self performSegueWithIdentifier:@"GameOver" sender:self];
-        
+*/
+         
+        [self performSelector:@selector(handleWrongAnswer) withObject:nil afterDelay:1.0];
         
     }
 }
@@ -433,6 +477,10 @@ static void dingSoundFinished(SystemSoundID soundID, void *data) {
     
 }
 
+- (void)handleWrongAnswer
+{
+    [self performSegueWithIdentifier:@"GameOver" sender:self];
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
