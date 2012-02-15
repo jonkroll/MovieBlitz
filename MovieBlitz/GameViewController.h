@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MBGame.h"
+#import "BlitzButton.h"
 
-@interface GameViewController : UIViewController
+@interface GameViewController : UIViewController <BlitzButtonDelegate>
 
 @property (nonatomic, strong) MBGame *game;
 @property (nonatomic, strong) UILabel *scoreLabel IBOutlet;

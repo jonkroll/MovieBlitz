@@ -18,6 +18,7 @@
 
 @synthesize item = _item;
 @synthesize position = _position;
+@synthesize delegate = _delegate;
 
 - (id)initWithItem:(NSManagedObject*)obj forPositionNumber:(NSInteger)num
 {
@@ -68,20 +69,17 @@
     return self;
 }
 
+
 - (void)slideInWithDelay:(float)secondsToDelay
 {
-    [UIView animateWithDuration:0.5
-                        delay:secondsToDelay
-                      options: UIViewAnimationOptionCurveEaseOut 
+    [UIView animateWithDuration:0.5 delay:secondsToDelay options: UIViewAnimationOptionCurveEaseOut 
                    animations:^{
                          CGPoint p = self.center;
                          p.x += 310;
                          self.center = p;
                    } 
-                   completion:^(BOOL finished){
- 
-
-                       
+                   completion:^(BOOL finished){ 
+                       [self.delegate button:self didFinishMoveType:BlitzButtonMoveTypeSlideIn];
                        [UIView animateWithDuration:0.1
                                                delay:0
                                              options: UIViewAnimationOptionCurveEaseInOut
@@ -92,64 +90,22 @@
                                           } 
                                           completion:^(BOOL finished){
                                               //done
-
-/*                                              
-                                              NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                                              if ([[defaults objectForKey:@"sounds"] isEqualToString:@"on"]) {
-                                                  
-                                                  //[(AppDelegate *)[[UIApplication sharedApplication] delegate] playSound:@"click";
-                                                  
-                                                  SystemSoundID soundID;                       
-                                                  OSStatus err = kAudioServicesNoError;
-                                                  NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"click" ofType:@"wav"];
-                                                  NSURL *soundURL = [NSURL fileURLWithPath:soundPath];
-                                                  err = AudioServicesCreateSystemSoundID((__bridge CFURLRef) soundURL, &soundID);                       
-                                                  if (err == kAudioServicesNoError) {
-                                                      // set up callback for sound completion
-                                                      //err = AudioServicesAddSystemSoundCompletion(soundID,NULL,NULL,SystemSoundsDemoCompletionProc,NULL); 
-                                                      AudioServicesPlaySystemSound (soundID); 
-                                                  }
-                                                  
-                                              }
-*/                                              
-                                          }
-                        ];
+                                          }];
                    }];    
 }
 
 
 - (void)slideOutWithDelay:(float)secondsToDelay
 {
-    [UIView animateWithDuration:0.1
-                          delay:secondsToDelay
-                        options: UIViewAnimationOptionCurveEaseInOut 
+    [UIView animateWithDuration:0.1 delay:secondsToDelay options: UIViewAnimationOptionCurveEaseInOut 
                      animations:^{
                          CGPoint p = self.center;
                          p.x -= 10;
                          self.center = p;
                      } 
                      completion:^(BOOL finished){
-                                                  
-                         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-                         if ([[defaults objectForKey:@"sounds"] isEqualToString:@"on"]) {
-                             
-                             //[(AppDelegate *)[[UIApplication sharedApplication] delegate] playSound:@"pop2"];
-
-                             SystemSoundID soundID;                       
-                             OSStatus err = kAudioServicesNoError;
-                             NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"pop2" ofType:@"wav"];
-                             NSURL *soundURL = [NSURL fileURLWithPath:soundPath];
-                             err = AudioServicesCreateSystemSoundID((__bridge CFURLRef) soundURL, &soundID);                       
-                             if (err == kAudioServicesNoError) {
-                                 // set up callback for sound completion
-                                 //err = AudioServicesAddSystemSoundCompletion(soundID,NULL,NULL,SystemSoundsDemoCompletionProc,NULL); 
-                                 AudioServicesPlaySystemSound (soundID); 
-                             }
- 
-                         }
-                         [UIView animateWithDuration:0.5
-                                               delay:0
-                                             options: UIViewAnimationOptionCurveEaseIn
+                         [self.delegate button:self didStartMoveType:BlitzButtonMoveTypeSlideOut];
+                         [UIView animateWithDuration:0.5 delay:0 options: UIViewAnimationOptionCurveEaseIn
                                           animations:^{
                                               CGPoint p = self.center;
                                               p.x += 310;
@@ -164,17 +120,18 @@
 
 - (void)sendToTopWithDelay:(float)secondsToDelay
 {
-    [UIView animateWithDuration:0.5
-                          delay:secondsToDelay
-                        options: UIViewAnimationOptionCurveEaseInOut 
+    [self.delegate button:self didStartMoveType:BlitzButtonMoveTypeSlideUp];
+    [UIView animateWithDuration:0.5 delay:secondsToDelay options: UIViewAnimationOptionCurveEaseInOut 
                      animations:^{
                          CGPoint p = self.center;
                          p.y = 76;
                          self.center = p;
                      } 
                      completion:^(BOOL finished){
-                         // done
+                         [self.delegate button:self didFinishMoveType:BlitzButtonMoveTypeSlideUp];
+
                      }];   
 }
+
 
 @end

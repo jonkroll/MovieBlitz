@@ -18,13 +18,20 @@
 #import "UIImageView+WebCache.h"
 #import "GameOverViewController.h"
 
-@interface GameViewController (Private)
+@interface GameViewController ()
+{
+    SystemSoundID silenceSound;  // 1 second of quiet
+    SystemSoundID popSound;
+    SystemSoundID clickSound;
+    SystemSoundID dingSound;
+    SystemSoundID bummerSound;
+}
 - (void)updateLifelinesLabel;
 - (void)transitionToNextQuestion;
 - (void)activateButtons;
 - (void)handleWrongAnswer;
-static void dingSoundFinished(SystemSoundID soundID, void *data);
-
+- (void)registerSoundWithResource:(NSString*)resource ofType:(NSString*)type intoID:(SystemSoundID*)soundID;
+void SoundFinished (SystemSoundID snd, void* context);
 @end
 
 #pragma mark -
@@ -38,6 +45,27 @@ static void dingSoundFinished(SystemSoundID soundID, void *data);
 @synthesize lifelinesButton = _lifelinesButton;
 @synthesize lifelinesLabel = _lifelinesLabel;
 
+
+- (id)initWithCoder:(NSCoder *)aDecoder 
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+
+        NSLog(@"registering sounds");
+        
+        [self registerSoundWithResource:@"silence" ofType:@"wav" intoID:&silenceSound];
+        [self registerSoundWithResource:@"pop2" ofType:@"wav" intoID:&popSound];
+        [self registerSoundWithResource:@"click" ofType:@"wav" intoID:&clickSound];
+        [self registerSoundWithResource:@"ding" ofType:@"wav" intoID:&dingSound];
+        [self registerSoundWithResource:@"bummer" ofType:@"wav" intoID:&bummerSound];
+
+        // need to play a dummy sound here, otherwise the first played sound gets delayed
+        AudioServicesPlaySystemSound(silenceSound);   
+    }
+    return self;
+}
+
+
 #pragma mark - Getters
 
 - (NSMutableArray*)currentButtons
@@ -48,7 +76,6 @@ static void dingSoundFinished(SystemSoundID soundID, void *data);
     }
     return _currentButtons;
 }
-
 
 #pragma mark - View lifecycle
 
@@ -172,7 +199,9 @@ static void dingSoundFinished(SystemSoundID soundID, void *data);
                                       forPositionNumber:i+1];            
         }
         [self.currentButtons addObject:button];
-        [self.view addSubview:button];        
+        [self.view addSubview:button];   
+        
+        button.delegate = self;
 
         [button slideInWithDelay:(delay += 0.2)];
     }
@@ -384,10 +413,10 @@ static void dingSoundFinished(SystemSoundID soundID, void *data);
     }
 }
 
-static void dingSoundFinished(SystemSoundID soundID, void *data) {
-    
-    [(__bridge GameViewController*)data transitionToNextQuestion];
-}
+//static void dingSoundFinished(SystemSoundID soundID, void *data) {
+//    
+//    [(__bridge GameViewController*)data transitionToNextQuestion];
+//}
 
 - (void)transitionToNextQuestion
 {
@@ -474,13 +503,40 @@ static void dingSoundFinished(SystemSoundID soundID, void *data) {
     
     self.scoreLabel.text = [NSString stringWithFormat:@"%i",self.game.score];
     [self.scoreLabel setNeedsDisplay];
+
+    // show star
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"star" ofType:@"png"];
+    UIImageView *starImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:path]];
+    starImageView.alpha = 1.0;
+    starImageView.frame = CGRectMake((self.scoreLabel.frame.size.width/2) - 8, (self.scoreLabel.frame.size.height/2) - 8, 16, 16);
+ 
     
+    [self.scoreLabel addSubview:starImageView];
+    
+    [UIView animateWithDuration:1.0
+                          delay:0.0
+                        options: UIViewAnimationOptionCurveEaseInOut 
+                     animations:^{
+                         
+                         // fade in star
+                         [starImageView setAlpha:0.0];
+                         starImageView.frame = CGRectMake((self.scoreLabel.frame.size.width/2) + 4, 
+                                                          (self.scoreLabel.frame.size.height/2) - 12, 12, 12);
+                         
+                     } 
+                     completion:^(BOOL finished){
+
+                         [starImageView removeFromSuperview];
+                     }];
+
 }
+
 
 - (void)handleWrongAnswer
 {
     [self performSegueWithIdentifier:@"GameOver" sender:self];
 }
+
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -502,16 +558,59 @@ static void dingSoundFinished(SystemSoundID soundID, void *data) {
                 }
             }
         }        
-
     }
 }
 
 
-#pragma mark - UIAlertView Delegate
+#pragma mark - BlitzButton Delegate
 
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
+- (void)button:(BlitzButton*)button didFinishMoveType:(BlitzButtonMoveType) type {
     
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    NSLog(@"Blitz Button didFinishMoveType:");
+
+    if (type == BlitzButtonMoveTypeSlideIn) {
+        // play click sound when button slides in
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if ([[defaults objectForKey:@"sounds"] isEqualToString:@"on"]) {
+
+            AudioServicesPlaySystemSound(clickSound);  
+        }
+    }
+
 }
+
+- (void)button:(BlitzButton*)button didStartMoveType:(BlitzButtonMoveType) type {
+    
+    NSLog(@"Blitz Button didStartMoveType:");
+    
+    if (type == BlitzButtonMoveTypeSlideOut) {
+        // play pop sound when button slides out
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        if ([[defaults objectForKey:@"sounds"] isEqualToString:@"on"]) {
+          
+            AudioServicesPlaySystemSound(popSound);   
+
+        }
+    }
+}
+
+#pragma mark - Audio functions
+
+- (void)registerSoundWithResource:(NSString*)resource ofType:(NSString*)type intoID:(SystemSoundID*)soundID
+{
+    // register system sounds
+    NSString *soundPath = [[NSBundle mainBundle] pathForResource:resource ofType:type];
+    if (soundPath) {
+        NSURL * soundURL = [NSURL fileURLWithPath:soundPath];
+        OSStatus err = AudioServicesCreateSystemSoundID((__bridge CFURLRef)soundURL, soundID);
+        if (err != kAudioServicesNoError) {
+            NSLog(@"Could not load %@, error code: %ld", soundURL, err);
+        }
+    }   
+}
+
+void SoundFinished (SystemSoundID snd, void* context) {
+    AudioServicesRemoveSystemSoundCompletion(snd);
+    AudioServicesDisposeSystemSoundID(snd); }
 
 @end
