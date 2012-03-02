@@ -8,11 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SettingsViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface SettingsViewController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
-@property (nonatomic, strong) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) IBOutlet UILabel *versionLabel;
 
 - (IBAction)clickDoneButton;
+- (IBAction)flipAudioSwitch:(UISwitch*)sender;
+- (IBAction)changeDifficulty:(UISegmentedControl*)sender;
 
 @end

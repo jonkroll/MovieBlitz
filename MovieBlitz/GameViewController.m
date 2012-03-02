@@ -26,6 +26,9 @@
     SystemSoundID dingSound;
     SystemSoundID bummerSound;
 }
+
+@property (nonatomic, retain) UIImageView *hiddenImageView;
+
 - (void)updateLifelinesLabel;
 - (void)transitionToNextQuestion;
 - (void)activateButtons;
@@ -44,6 +47,8 @@ void SoundFinished (SystemSoundID snd, void* context);
 @synthesize currentButtons = _currentButtons;
 @synthesize lifelinesButton = _lifelinesButton;
 @synthesize lifelinesLabel = _lifelinesLabel;
+
+@synthesize hiddenImageView = _hiddenImageView;
 
 
 - (id)initWithCoder:(NSCoder *)aDecoder 
@@ -90,6 +95,10 @@ void SoundFinished (SystemSoundID snd, void* context);
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];    
     NSManagedObjectContext *context = appDelegate.context;
     
+    // load large images for correct answers in case we need them for game over view
+    self.hiddenImageView = [[UIImageView alloc] initWithFrame:CGRectZero];
+    
+    
     [self showQuestion:[MBMovieQuestion movieQuestionFromContext:context]];
 
 }
@@ -115,6 +124,19 @@ void SoundFinished (SystemSoundID snd, void* context);
 {
     self.game.currentQuestion = q;
     [self.currentButtons removeAllObjects];
+
+    NSString *imgString;
+    if ([q isKindOfClass:[MBMovieQuestion class]]) {
+        
+        Actor* actor = [(MBMovieQuestion*)q correctAnswer];
+        imgString = [actor.image stringByReplacingOccurrencesOfString:@"/w45/" withString:@"/w185/"];
+    } else {
+        
+        Movie* movie = [(MBActorQuestion*)q correctAnswer];
+        imgString = [movie.image stringByReplacingOccurrencesOfString:@"/w92/" withString:@"/w185/"];
+    }
+    
+    [self.hiddenImageView setImageWithURL:[NSURL URLWithString:imgString]];
     
     if (self.game.numLifelines > 0) {
         [self.lifelinesButton setEnabled:YES];

@@ -10,21 +10,13 @@
 
 @implementation SettingsViewController
 
-@synthesize tableView = _tableView;
 @synthesize versionLabel = _versionLabel;
-
 
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
     
     self.versionLabel.text = @"Version 1.0 beta 1";
     
@@ -45,7 +37,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return 2;
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -54,6 +46,10 @@
         return @"Game Settings";
     }
     return @"";
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    return 60;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -65,14 +61,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    // Configure the cell...
     if (indexPath.section == 0 && indexPath.row == 0) {
         
         cell.textLabel.text = @"Sounds";
         
-        UISwitch *onoff = [[UISwitch alloc] initWithFrame:CGRectMake(215.0, 8.0, 80.0, 45.0)];
+        UISwitch *onoff = [[UISwitch alloc] initWithFrame:CGRectMake(215.0, 16.0, 80.0, 27.0)];
         
-        [onoff addTarget:self action:@selector(flip:) forControlEvents:UIControlEventValueChanged];
+        [onoff addTarget:self action:@selector(flipAudioSwitch:) forControlEvents:UIControlEventValueChanged];
         
 
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -80,23 +75,50 @@
         
         [cell.contentView addSubview:onoff];
         
-      }  
+    } else if (indexPath.section == 0 && indexPath.row == 1) {
+        
+        cell.textLabel.text = @"Difficulty";
+        
+        UISegmentedControl *difficultySegmentedControl = 
+        [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Easy",@"Hard",nil]];
+                                                          
+        [difficultySegmentedControl setFrame:CGRectMake(155.0, 8.0, 140.0, 43.0)];        
+        [difficultySegmentedControl addTarget:self action:@selector(changeDifficulty:) forControlEvents:UIControlEventValueChanged];
+
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        int selectedSegmentIndex = ([[defaults stringForKey:@"difficulty"] isEqualToString:@"hard"]) ? 1 : 0;
+        
+        [difficultySegmentedControl setSelectedSegmentIndex:selectedSegmentIndex];
+        
+        [cell.contentView addSubview:difficultySegmentedControl];
+        
+    }  
     return cell;
 }
-
 
 - (IBAction)clickDoneButton {
     
     [self dismissModalViewControllerAnimated:YES];
 }
 
-- (void)flip:(UISwitch*)sender {
+- (IBAction)flipAudioSwitch:(UISwitch*)sender {
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSString *switchvalue = ([sender isOn]) ? @"on" : @"off";
     
     [defaults setObject:switchvalue forKey:@"sounds"];
 
+    [defaults synchronize];
+}
+
+- (IBAction)changeDifficulty:(UISegmentedControl*)sender {
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSString *difficultyValue = ([sender selectedSegmentIndex] == 1) ? @"hard" : @"easy";
+    
+    [defaults setObject:difficultyValue forKey:@"difficulty"];
+    
+    [defaults synchronize];
 }
 
 @end

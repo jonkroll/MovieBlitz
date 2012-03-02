@@ -388,7 +388,7 @@
 		6E9D7A2014DA3F4400637247 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = Optionetics;
 			};
 			buildConfigurationList = 6E9D7A2314DA3F4400637247 /* Build configuration list for PBXProject "MovieBlitz" */;

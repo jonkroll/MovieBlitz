@@ -48,9 +48,10 @@ void uncaughtExceptionHandler(NSException *exception);
     
     // create user defauls if they don't exist
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    if (![defaults stringForKey:@"sounds"]) {
+    if ([defaults stringForKey:@"sounds"]) {
 
         [defaults setObject:@"on" forKey:@"sounds"];
+        [defaults setObject:@"easy" forKey:@"difficulty"];
         
         // save defaults
         [defaults synchronize];
