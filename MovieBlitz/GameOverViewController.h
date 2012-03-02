@@ -11,6 +11,9 @@
 #import "MBQuestion.h"
 
 @interface GameOverViewController : UIViewController
+{
+    float imageAspectRatio;
+}
 
 @property (nonatomic, strong) MBGame *finishedGame;
 @property (nonatomic, strong) UIImage *miniImage;
@@ -19,5 +22,7 @@
 @property (nonatomic, strong) IBOutlet UILabel *yourScoreText;
 
 - (IBAction)clickContinueButton:(UIButton*)sender;
+
+- (void)setImageAspectRatio:(float)aspectRatio;
 
 @end

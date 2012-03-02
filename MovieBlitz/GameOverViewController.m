@@ -20,6 +20,14 @@
 @synthesize gameOverText = _gameOverText;
 @synthesize yourScoreText = _yourScoreText;
 
+- (id)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        imageAspectRatio = 1.0;
+    }
+    return self;
+}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -27,6 +35,13 @@
     
     // Release any cached data, images, etc that aren't in use.
 }
+
+
+- (void)setImageAspectRatio:(float)aspectRatio
+{
+    imageAspectRatio = aspectRatio;    
+}
+
 
 #pragma mark - View lifecycle
 
@@ -63,7 +78,7 @@
     if (self.miniImage) {
         int imgHeight = 180;
         
-        int imgWidth = self.miniImage.size.width * imgHeight / self.miniImage.size.width;
+        int imgWidth = imgHeight / imageAspectRatio;
 
         int imgFrameOriginX = ((320 - imgWidth) /2) - 10;
         int imgFrameOriginY = ((480 - imgHeight) /2) - 10 - 20; 

@@ -257,6 +257,8 @@
 				6EAD61E014DD20A0004C835A /* Views */,
 				6E9D7A3C14DA3F4400637247 /* AppDelegate.h */,
 				6E9D7A3D14DA3F4400637247 /* AppDelegate.m */,
+				6EB9075E14E60FB90028E123 /* NonAnimatedSegue.h */,
+				6EB9075F14E60FB90028E123 /* NonAnimatedSegue.m */,
 				6EAD61EF14DDC1A0004C835A /* NSMutableArray+Utils.h */,
 				6EAD61F014DDC1A1004C835A /* NSMutableArray+Utils.m */,
 				6E9D7A3F14DA3F4400637247 /* MainStoryboard.storyboard */,
@@ -264,8 +266,6 @@
 				6E79840014E3333F006E4B4A /* Images */,
 				6E6C1C6414E5BF69005A9412 /* Sounds */,
 				6E9D7A3414DA3F4400637247 /* Supporting Files */,
-				6EB9075E14E60FB90028E123 /* NonAnimatedSegue.h */,
-				6EB9075F14E60FB90028E123 /* NonAnimatedSegue.m */,
 			);
 			path = MovieBlitz;
 			sourceTree = "<group>";

@@ -50,8 +50,6 @@ void SoundFinished (SystemSoundID snd, void* context);
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-
-        NSLog(@"registering sounds");
         
         [self registerSoundWithResource:@"silence" ofType:@"wav" intoID:&silenceSound];
         [self registerSoundWithResource:@"pop2" ofType:@"wav" intoID:&popSound];
@@ -553,7 +551,16 @@ void SoundFinished (SystemSoundID snd, void* context);
                 UIView *view;
                 for (view in [button subviews]) {
                     if ([view isKindOfClass:[UIImageView class]]) {
+                        
+                        UIImage* image = (UIImage*)view;
+                        
                         [vc setMiniImage:[(UIImageView*)view image]];
+                        
+                        float aspectRatio = image.size.width / image.size.height;
+                        
+                        [vc setImageAspectRatio:aspectRatio];
+                        
+                        
                     }
                 }
             }
@@ -565,8 +572,6 @@ void SoundFinished (SystemSoundID snd, void* context);
 #pragma mark - BlitzButton Delegate
 
 - (void)button:(BlitzButton*)button didFinishMoveType:(BlitzButtonMoveType) type {
-    
-    NSLog(@"Blitz Button didFinishMoveType:");
 
     if (type == BlitzButtonMoveTypeSlideIn) {
         // play click sound when button slides in
@@ -580,8 +585,6 @@ void SoundFinished (SystemSoundID snd, void* context);
 }
 
 - (void)button:(BlitzButton*)button didStartMoveType:(BlitzButtonMoveType) type {
-    
-    NSLog(@"Blitz Button didStartMoveType:");
     
     if (type == BlitzButtonMoveTypeSlideOut) {
         // play pop sound when button slides out
