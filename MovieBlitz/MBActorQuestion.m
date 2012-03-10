@@ -109,12 +109,34 @@
             // Deal with error...
         }
         if(array.count > 0){
-            
-            // TODO: make sure that the role's movie is not already in the movies array
 
-            
             Role *role = (Role*)[array objectAtIndex:0];
-            [question.movies addObject:role.movie];
+            
+            // make sure that the movie does not already appear in the movies array
+            for (Movie *movie in question.movies) {
+                if ([movie.title isEqualToString:role.movie.title]) {
+                    role = nil;
+                    break;
+                }
+            }
+            
+            // make sure the movie didn't star the actor for the question
+            NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"movie.title = %@ and actor.name = %@", role.movie.title, actor.name];
+            
+            NSError *error = nil;
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            [request setEntity:[NSEntityDescription entityForName:@"Role" inManagedObjectContext:context]];
+            [request setPredicate:predicate2];    
+            [request setIncludesSubentities:NO];
+            NSUInteger numRoles = [context countForFetchRequest:request error:&error];
+            
+            if (numRoles > 0) {
+                role = nil;
+            }
+            
+            if (role) {
+                [question.movies addObject:role.movie];
+            }
         } 
     }
     

@@ -99,7 +99,7 @@
 
         int r = arc4random() % numRoles;
 
-         request = [[NSFetchRequest alloc] init];
+        request = [[NSFetchRequest alloc] init];
         [request setEntity:[NSEntityDescription entityForName:@"Role" inManagedObjectContext:context]];
         [request setPredicate:predicate];
         [request setFetchOffset:r];
@@ -111,11 +111,34 @@
         }
         
         if(array.count > 0){
-         
-            // TODO: make sure that the role's actor is not already in the actors array
             
-            Role *role = (Role*)[array objectAtIndex:0];
-            [question.actors addObject:role.actor];
+            Role *role = (Role*)[array objectAtIndex:0];            
+            
+            // make sure that the actor is not already in the actors array
+            for (Actor *actor in question.actors) {
+                if ([actor.name isEqualToString:role.actor.name]) {
+                    role = nil;
+                    break;
+                }
+            }
+            
+            // make sure the actor wasn't in the movie for the question
+            NSPredicate *predicate2 = [NSPredicate predicateWithFormat:@"movie.title = %@ and actor.name = %@", movie.title, role.actor.name];
+
+            NSError *error = nil;
+            NSFetchRequest *request = [[NSFetchRequest alloc] init];
+            [request setEntity:[NSEntityDescription entityForName:@"Role" inManagedObjectContext:context]];
+            [request setPredicate:predicate2];    
+            [request setIncludesSubentities:NO];
+            NSUInteger numRoles = [context countForFetchRequest:request error:&error];
+            
+            if (numRoles > 0) {
+                role = nil;
+            }
+            
+            if (role) {
+                [question.actors addObject:role.actor];
+            }
         } 
     }
     

@@ -524,6 +524,7 @@ void SoundFinished (SystemSoundID snd, void* context);
     self.scoreLabel.text = [NSString stringWithFormat:@"%i",self.game.score];
     [self.scoreLabel setNeedsDisplay];
 
+/*
     // show star
     NSString *path = [[NSBundle mainBundle] pathForResource:@"star" ofType:@"png"];
     UIImageView *starImageView = [[UIImageView alloc] initWithImage:[UIImage imageWithContentsOfFile:path]];
@@ -548,7 +549,8 @@ void SoundFinished (SystemSoundID snd, void* context);
 
                          [starImageView removeFromSuperview];
                      }];
-
+*/
+    
 }
 
 
@@ -567,11 +569,10 @@ void SoundFinished (SystemSoundID snd, void* context);
 
         // save miniimage from the button so we know the correct dimensions for the larger version
         // we'll show on the next view
-        BlitzButton *button;
-        for (button in self.currentButtons) {
+        
+        for (BlitzButton *button in self.currentButtons) {
             if ([self.game.currentQuestion isCorrectAnswer:button.item]) {
-                UIView *view;
-                for (view in [button subviews]) {
+                for (UIView *view in [button subviews]) {
                     if ([view isKindOfClass:[UIImageView class]]) {
                         
                         UIImage* image = (UIImage*)view;
@@ -581,8 +582,7 @@ void SoundFinished (SystemSoundID snd, void* context);
                         float aspectRatio = image.size.width / image.size.height;
                         
                         [vc setImageAspectRatio:aspectRatio];
-                        
-                        
+                                                
                     }
                 }
             }

@@ -17,9 +17,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.versionLabel.text = @"Version 1.0 beta 1";
-    
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -29,11 +27,6 @@
 }
 
 #pragma mark - Table view data source
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -68,7 +61,6 @@
         UISwitch *onoff = [[UISwitch alloc] initWithFrame:CGRectMake(215.0, 16.0, 80.0, 27.0)];
         
         [onoff addTarget:self action:@selector(flipAudioSwitch:) forControlEvents:UIControlEventValueChanged];
-        
 
         NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [onoff setOn:[[defaults stringForKey:@"sounds"] isEqualToString:@"on"]];
@@ -96,11 +88,6 @@
     return cell;
 }
 
-- (IBAction)clickDoneButton {
-    
-    [self dismissModalViewControllerAnimated:YES];
-}
-
 - (IBAction)flipAudioSwitch:(UISwitch*)sender {
 
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -119,6 +106,11 @@
     [defaults setObject:difficultyValue forKey:@"difficulty"];
     
     [defaults synchronize];
+}
+
+- (IBAction)clickDoneButton {
+    
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

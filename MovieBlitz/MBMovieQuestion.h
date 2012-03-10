@@ -15,8 +15,8 @@
 @interface MBMovieQuestion : MBQuestion
 
 @property (nonatomic, strong) Movie *movie;
-@property (nonatomic, strong) NSMutableArray *actors;
 @property (nonatomic, strong) Role *role;
+@property (nonatomic, strong) NSMutableArray *actors;
 @property (nonatomic, strong) Actor *correctAnswer;
 
 + (id)movieQuestionFromContext:(NSManagedObjectContext*)context;
