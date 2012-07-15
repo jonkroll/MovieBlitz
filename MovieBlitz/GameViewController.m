@@ -8,6 +8,7 @@
 
 #import <QuartzCore/QuartzCore.h>
 #import <AudioToolbox/AudioToolbox.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "GameViewController.h"
 #import "NSMutableArray+Utils.h"
 #import "BlitzButton.h"
@@ -15,7 +16,6 @@
 #import "MBMovieQuestion.h"
 #import "MBActorQuestion.h"
 #import "AppDelegate.h"
-#import "UIImageView+WebCache.h"
 #import "GameOverViewController.h"
 
 @interface GameViewController ()
@@ -415,7 +415,7 @@ void SoundFinished (SystemSoundID snd, void* context);
         NSMutableSet *eliminateButtons = [NSMutableSet setWithCapacity:0];
         while ([eliminateButtons count] < 2) {
             
-            int r = arc4random() % self.currentButtons.count;
+            int r = arc4random_uniform(self.currentButtons.count);
             BlitzButton *button = (BlitzButton*)[self.currentButtons objectAtIndex:r];
             if (![self.game.currentQuestion isCorrectAnswer:button.item] &&
                 ![eliminateButtons containsObject:button]) {

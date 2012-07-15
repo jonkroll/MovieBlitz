@@ -12,7 +12,7 @@
 #import "BlitzButton.h"
 #import "Actor.h"
 #import "Movie.h"
-#import "UIImageView+WebCache.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @implementation BlitzButton
 

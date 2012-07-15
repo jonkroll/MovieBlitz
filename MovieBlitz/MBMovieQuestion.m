@@ -47,7 +47,7 @@
         return nil;
     }
 
-    int r = arc4random() % numMovies;
+    int r = arc4random_uniform(numMovies);
 
     // get the movie at that index
     request = [[NSFetchRequest alloc] init];
@@ -76,7 +76,7 @@
     int numActorRoles = [movie.roles count];
     Role *role;
     do {
-        int randomlySelectedIndex = arc4random() % numActorRoles;
+        int randomlySelectedIndex = arc4random_uniform(numActorRoles);
         role = [[movie.roles allObjects] objectAtIndex:randomlySelectedIndex];
     } while (lastActorUsed && role.actor == lastActorUsed);
 
@@ -97,7 +97,7 @@
 
     while (question.actors.count < 4) {
 
-        int r = arc4random() % numRoles;
+        int r = arc4random_uniform(numRoles);
 
         request = [[NSFetchRequest alloc] init];
         [request setEntity:[NSEntityDescription entityForName:@"Role" inManagedObjectContext:context]];

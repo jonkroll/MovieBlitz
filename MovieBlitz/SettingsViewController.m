@@ -41,9 +41,6 @@
     return @"";
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return 60;
-}
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -51,26 +48,33 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:CellIdentifier];
     }
-    
+
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
     if (indexPath.section == 0 && indexPath.row == 0) {
         
         cell.textLabel.text = @"Sounds";
         
-        UISwitch *onoff = [[UISwitch alloc] initWithFrame:CGRectMake(215.0, 16.0, 80.0, 27.0)];
+        UISwitch *onoff = [[UISwitch alloc] initWithFrame:CGRectMake(215.0, 8.0, 80.0, 27.0)];
         
         [onoff addTarget:self action:@selector(flipAudioSwitch:) forControlEvents:UIControlEventValueChanged];
 
-        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
         [onoff setOn:[[defaults stringForKey:@"sounds"] isEqualToString:@"on"]];
         
         [cell.contentView addSubview:onoff];
         
+        [cell setUserInteractionEnabled:NO];
+        
     } else if (indexPath.section == 0 && indexPath.row == 1) {
-        
+
+
         cell.textLabel.text = @"Difficulty";
+        cell.detailTextLabel.text = [[defaults stringForKey:@"difficulty"] capitalizedString];
         
+        cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+/*
         UISegmentedControl *difficultySegmentedControl = 
         [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Easy",@"Hard",nil]];
                                                           
@@ -83,6 +87,7 @@
         [difficultySegmentedControl setSelectedSegmentIndex:selectedSegmentIndex];
         
         [cell.contentView addSubview:difficultySegmentedControl];
+        */
         
     }  
     return cell;
